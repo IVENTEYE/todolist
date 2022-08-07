@@ -12,9 +12,10 @@ function App() {
   const [taskGetDate, setTaskGetDate] = useState('');
   const [taskGetMonth, setTaskGetMonts] = useState('');
 
-  const completedTasksDate = tasks.filter(task => task.checkState === true && task.dateVisible === true);
-  const completedTasks = tasks.filter(task => task.checkState === true && task.dateVisible === false);
-  const activeTasks = tasks.filter(task => task.checkState === false);
+  // const completedTasksDate = tasks.filter(task => task.checkState === true && task.dateVisible === true);
+  // const completedTasks = tasks.filter(task => task.checkState === true && task.dateVisible === false);
+  // const activeTasks = tasks.filter(task => task.checkState === false);
+    
 
   useEffect(() => {
     const tasks = JSON.parse(localStorage.getItem('tasks'));
@@ -148,7 +149,7 @@ function App() {
             </button>
           </div>
           <div className={styles.todo__notes}>
-            {tasks.length > 0 ? [...completedTasksDate,...activeTasks,...completedTasks].map(task => {
+            {tasks.length > 0 ? tasks.map(task => {
               return (
                 <Task
                   key={task.id}
