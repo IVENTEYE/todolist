@@ -3,6 +3,7 @@
     align-items: center;
     transition: transform 0.2s ease;
     will-change: contents;
+    margin: 0 3px;
     &:not(:last-child) {
         margin-bottom: 20px;
     }

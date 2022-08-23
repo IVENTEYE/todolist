@@ -1,0 +1,227 @@
+.notesFilter {
+    position: relative;
+}
+
+.notesFilterSelected {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: var(--sub-color);
+}
+
+.selectedIcon {
+    transform: translateY(2px);
+    margin-right: 5px;
+    svg {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+.notesFilterBody {
+    position: absolute;
+    background-color: var(--body-color);
+    top: 24px;
+    z-index: 3;
+    border-radius: 4px;
+    padding: 7px;
+    box-shadow: 2px 1px 10px 3px var(--box-shadow);
+    transform: translateY(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease-in-out;
+    &._active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    @media (max-width: 424.98px) {
+        width: calc(100% - 21px);
+    }
+}
+
+.filter {
+    max-height: 181px;
+    overflow: auto;
+    &::-webkit-scrollbar {
+        width: 5px;
+        border-radius: 5px;
+        background-color: rgb(200, 200, 200);
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgb(143, 143, 143);
+    }
+}
+
+.filter,
+.createCategory {
+    margin-top: 8px;
+    padding: 0 5px;
+}
+
+.filterNotes {
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--sub-color);
+}
+
+.actionItem {
+    &Btn {
+        display: flex;
+        width: 100%;
+        color: var(--sub-color);
+        font-size: 15px;
+        font-family: inherit;
+        transition: all 0.2s ease-in-out;
+        padding: 3px;
+        border-radius: 4px;
+    }
+    &:hover {
+        .actionItemBtn {
+            background-color: var(--notes-bg);
+        }
+    }
+    &:not(:last-child) {
+        margin-bottom: 8px;
+    }
+    &Icon {
+        margin-right: 8px;
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+}
+
+.title {
+    color: var(--second-color);
+    margin-bottom: 15px;
+}
+
+.addCategory {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 15px;
+    &Color {
+        margin-right: 8px;
+        cursor: pointer;
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+    &Text {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        border-bottom: 1px solid var(--second-color);
+        width: 100%;
+        padding-bottom: 3px;
+        color: var(--second-color);
+        font-weight: 400;
+        font-size: 15px;
+        transition: all 0.2s ease-in-out;
+        &::placeholder {
+            color: var(--second-color);
+            opacity: .8;
+        }
+    }
+    &Buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+}
+
+.inputWarning {
+    position: absolute;
+    bottom: -15px;
+    left: 27px;
+    font-size: 11px;
+    color: red;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.1s ease;
+    &._active {
+        opacity: 1;
+        visibility: visible;
+        animation: warning 0.2s linear;
+    }
+}
+
+@keyframes warning {
+    0% {
+        left: 25px;
+    }
+    30% {
+        left: 30px;
+    }
+    60% {
+        left: 25px;
+    }
+    90% {
+        left: 30px;
+    }
+    100% {
+        left: 27px;
+    }
+}
+
+.categoriesList {
+    margin-bottom: 30px;
+    @media (max-width: 424.98px) {
+        & {
+            flex: 1 1 auto;
+            li {
+                margin-bottom: 11px !important;
+            }
+            button {
+                font-size: 17px;
+                svg {
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+        }
+    }
+}
+
+.chooseColor {
+    position: absolute;
+    bottom: 17px;
+    left: 0;
+    padding: 10px;
+    max-width: 172px;
+    background-color: var(--notes-bg);
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 4px;
+    row-gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease-in-out;
+    &._active {
+        bottom: 27px;
+        opacity: 1;
+        visibility: visible;
+    }
+    &Item {
+        flex: 0 1 25%;
+        text-align: center;
+    }
+    &Btn {
+        transition: background-color 0.2s ease-in-out;
+        padding: 4px;
+        border-radius: 4px;
+        &:hover {
+            background-color: var(--image-bg);
+        }
+        svg {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+    }
+}

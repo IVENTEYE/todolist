@@ -2,7 +2,6 @@ import React from 'react'
 import styles from './index.module.scss'
 
 function TheDate({createdDay, createdMonth}) {
-    // const nowDate = createdAt;
     const nowDay = createdDay;
     const months = 'января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря'.split(',');
     const nowMonth = months[createdMonth];
