@@ -8,7 +8,10 @@
     flex-direction: column;
     display: flex;
     &__header {
-        position: relative;
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 5;
         background-color: var(--accent-color);
         transition: background-color 0.2s 0.01s ease-in-out;
         padding: 15px 20px;
@@ -159,7 +162,10 @@
     padding: 12px;
     border-radius: 50%;
     box-shadow: 1px 16px 22px -16px var(--accent-color);
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out, transform 0.2s 0.05s ease-in-out;
+    &.hidden {
+        transform: translateY(270%);
+    }
     @media (min-width: 319.98px) {
         position: fixed;
         left: 81%;

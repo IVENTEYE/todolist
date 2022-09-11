@@ -5,7 +5,7 @@ import styles from './index.module.scss'
 function Field({ action, setButton, placeholder, className }) {
     const { inputValue, setInputValue } = useContext(AppContext);
     return (
-        <div className={styles.todo__field + ' ' + className} style={!setButton ? {gridTemplateColumns: 'calc(100% - 3px)'} : null}>
+        <div className={styles.todo__field + ' ' + className} style={!setButton ? {gridTemplateColumns: 'calc(100% - 3px)'}: null}>
             <div className={styles.todo__fieldWrapper}>
                 <input
                     type="text"
@@ -20,6 +20,7 @@ function Field({ action, setButton, placeholder, className }) {
                             action();
                         }
                     } : null}
+                    style={!setButton ? {borderRadius: '3px'} : null}
                 />
                 <button
                     className={inputValue ? styles.clear + ' ' + styles.visible : styles.clear}

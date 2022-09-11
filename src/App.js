@@ -62,21 +62,21 @@ function App() {
   const defaultNotes = currentNotes.filter(note => note.selected === false);
   const filteredNotes = [...selectedNotes, ...defaultNotes].filter(note => note.label.toLowerCase().includes(inputValue.toLowerCase()));
 
-  let scrollPos = 60;
-
+  let scrollPrev = window.pageYOffset;
+  
   const hideElements = () => {
     const scrollTop = window.pageYOffset;
-    console.log(elementsHidden);
-
-    if (scrollTop < scrollPos) {
-      setElementsHidden(false);
-    } else {
+    
+    if (scrollTop > 10 && scrollTop > scrollPrev) {
       setElementsHidden(true);
+    } else {
+      setElementsHidden(false);
     }
-    scrollPos = scrollTop;
+
+    scrollPrev = scrollTop;
   }
 
-  // window.addEventListener('scroll', hideElements);
+  window.addEventListener('scroll', hideElements);
 
   const onRedactNote = (id, title, description, category, icon) => {
     setNoteRedact(true);
@@ -134,18 +134,6 @@ function App() {
       document.body.style.backgroundColor = "#1a2c4a";
     }
     setCurrentNotes(notes);
-
-    // Добавление категории заметкам, созданным без категории
-    const checkCategory = notes.filter(note => !note.category && !note.categoryIcon);
-    if (checkCategory.length > 0) {
-      setNotes(prev => [...prev.filter(note => note.category && note.categoryIcon), ...prev.filter(note => !note.category && !note.categoryIcon).map(note => {
-        return {
-          ...note,
-          categoryIcon: '#b7b7b7',
-          category: 'Без категории'
-        }
-      })]);
-    }
   }, []);
 
   useEffect(() => {
@@ -369,7 +357,7 @@ function App() {
                 }
                 {!noteRedact ? notesMapped : <NoteRedact redactCategories={categories}/>}
                 {!noteRedact ?
-                  <button className={currentNotes.length > 4 ? styles.addBtn + ' ' + styles._sticky : styles.addBtn} onClick={() => setNoteRedact(true)}>
+                  <button className={`${currentNotes.length > 4 ? styles.addBtn + ' ' + styles._sticky : styles.addBtn} ${elementsHidden ? styles.hidden : ''}`} onClick={() => setNoteRedact(true)}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z" /></svg>
                   </button>
                   : null}

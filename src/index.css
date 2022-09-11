@@ -104,5 +104,4 @@ code {
 
 .hidden {
   transform: translateY(100%);
-  visibility: hidden;
 }
