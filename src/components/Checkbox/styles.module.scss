@@ -1,0 +1,50 @@
+.checkbox {
+    user-select: none;
+    margin-right: 10px;
+    input {
+        display: none;
+        &:checked + .checkbox__item {
+            background-color: var(--accent-color);
+            svg {
+                animation: checkboxActive 0.2s forwards;
+            }
+            
+        }
+    }
+    &__item {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--accent-color);
+        border-radius: 50%;
+        background-color: #fff;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        svg {
+            width: 12px;
+            height: 12px;
+            path {
+                fill: #fff;
+            }
+        }
+    }
+}
+
+@keyframes checkboxActive {
+    0% {
+        transform: translateY(-6px);
+        opacity: 0;
+        visibility: hidden;
+    }
+    70% {
+        transform: translateY(3px);
+        opacity: 0.8;
+        visibility: visible;
+    }
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}

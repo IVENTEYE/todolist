@@ -1,0 +1,108 @@
+.navbar {
+    bottom: 0;
+    left: 0;
+    background-color: var(--navbar-bg);
+    transition: all 0.2s ease-in-out;
+    padding: 5px 10px;
+    z-index: 6;
+    will-change: transform;
+    @media (min-width: 319.98px) {
+        & {
+            position: fixed;
+            width: calc(100% - 20px);
+        }
+    }
+    @media (min-width: 541px) {
+        & {
+            position: static;
+            width: calc(100% + 10px);
+            margin: 0 -15px 0 -15px;
+        }
+    }
+    &__items {
+        display: flex;
+        gap: 10px;
+    }
+    &__item {
+        flex: 1 1 auto;
+        border-radius: 8px;
+        text-align: center;
+        padding: 3px 10px;
+        transition: all 0.2s ease-in-out;
+        &._active, &._active:hover { 
+            .item__icon {
+                svg {
+                    path {
+                        fill: var(--accent-color);
+                    }
+                    circle {
+                        stroke: var(--accent-color);
+                    }
+                }
+            }
+            .item__text {
+                color: var(--accent-color);
+            }
+        }
+        &:hover {
+            background-color: var(--button-bg);
+            .item__icon {
+                svg {
+                    path {
+                        fill: darken(#b7b7b7, 10%);
+                    }
+                    circle {
+                        stroke: darken(#b7b7b7, 10%);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.item {
+    &__icon {
+        width: 25px;
+        height: 25px;
+        margin: 0 auto 5px auto;
+        svg {
+            path, circle {
+                transition: all 0.2s ease-in-out;
+            }
+        }
+    }
+    &__text {
+        font-size: 12px;
+        color: var(--sub-color);
+        transition: color 0.2s ease-in-out;
+    }
+}
+
+.todo__contentWrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    &::-webkit-scrollbar {
+        width: 5px;
+        border-radius: 5px;
+        background-color: rgb(200, 200, 200);
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgb(143, 143, 143);
+    }
+    @media (min-width: 319.98px) {
+        & {
+            max-height: none;
+        }
+    }
+    @media (min-width: 540px) {
+        & {
+            position: relative;
+            max-height: 380px;
+            padding: 0 0 10px 0;
+        }
+    }
+}

@@ -1,0 +1,128 @@
+.todo__header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    background-color: var(--accent-color);
+    transition: background-color 0.2s 0.01s ease-in-out;
+    padding: 15px 20px;
+    border-radius: 4px 4px 0px 0px;
+    &Title {
+        color: var(--main-color);
+        font-size: 22px;
+        font-weight: 600;
+    }
+    @media (max-width: 539.99px) {
+        border-radius: 0;
+    }
+    @media (max-width: 424.99px) {
+        & {
+            padding: 15px 10px 15px 10px;
+        }
+    }
+}
+
+
+.donateButton {
+    position: absolute;
+    top: 50%;
+    right: 51px;
+    transform: translateY(-43%);
+
+    img {
+        width: 20px;
+        height: 20px;
+    }
+
+    @media (max-width: 424.99px) {
+        right: 43px;
+    }
+}
+
+.themeButton {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    z-index: 1;
+
+    svg {
+        path {
+            fill: #fff;
+        }
+    }
+
+    @media (max-width: 424.99px) {
+        right: 11px;
+    }
+
+    &Moon {
+        transform: translateY(-50%) rotate(-75deg) scale(0);
+        visibility: hidden;
+
+        &.active {
+            animation: moonActive 0.4s linear;
+            transform: translateY(-50%) rotate(0deg);
+        }
+    }
+
+    &Sun {
+        transform: translateY(-50%) rotate(0deg) scale(0);
+        visibility: hidden;
+
+        &.active {
+            animation: sunActive 0.4s linear;
+            transform: translateY(-50%) rotate(360deg) scale(1);
+        }
+    }
+
+    &.active {
+        z-index: 2;
+        visibility: visible;
+    }
+}
+
+@keyframes moonActive {
+    0% {
+        transform: translateY(-50%) rotate(-75deg) scale(0);
+    }
+
+    50% {
+        transform: translateY(-50%) rotate(0deg) scale(0.7);
+    }
+
+    70% {
+        transform: translateY(-50%) rotate(20deg) scale(1);
+    }
+
+    100% {
+        transform: translateY(-50%) rotate(0deg);
+    }
+}
+
+@keyframes sunActive {
+    0% {
+        transform: translateY(-50%) rotate(0deg) scale(0);
+    }
+
+    50% {
+        transform: translateY(-50%) rotate(300deg) scale(0.5);
+        transition: all 0.1s ease;
+    }
+
+    70% {
+        transform: translateY(-50%) rotate(330deg) scale(0.7);
+        transition: all 0.3s ease;
+    }
+
+    90% {
+        transform: translateY(-50%) rotate(350deg) scale(0.8);
+        transition: all 0.5s ease;
+    }
+
+    100% {
+        transform: translateY(-50%) rotate(360deg) scale(1);
+    }
+}
