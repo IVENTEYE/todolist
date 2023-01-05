@@ -14,6 +14,7 @@ function Categories({ filter, categories, setCategory, onFilter }) {
     const [filterVisible, setFilterVisible] = useState(false);
     const [selectedIcon, setSelectedIcon] = useState('');
     const [selectedValue, setSelectedValue] = useState('Все заметки');
+    const categoriesRef = React.useRef();
 
     useEffect(() => {
         const filterIcon = localStorage.getItem('filterIcon');
@@ -35,6 +36,16 @@ function Categories({ filter, categories, setCategory, onFilter }) {
         localStorage.setItem('filterIcon', selectedIcon);
     }, [selectedValue]);
 
+    useEffect(() => {
+        const closeCategoriesPopup = e => {
+            if (!e.path.includes(categoriesRef.current)) {
+                setFilterVisible(false);
+            }
+        };
+
+        document.body.addEventListener('click', closeCategoriesPopup);
+    }, []);
+
     const onSelectCategory = (icon, text) => {
         setSelectedIcon(icon);
         setSelectedValue(text);
@@ -42,7 +53,7 @@ function Categories({ filter, categories, setCategory, onFilter }) {
     }
 
     return (
-        <div className={styles.notesFilter}>
+        <div ref={categoriesRef} className={styles.notesFilter}>
             <button onClick={() => setFilterVisible(!filterVisible)} type='button' className={styles.notesFilterSelected}>
                 <div className={styles.selectedIcon}>
                     { selectedValue === 'Все заметки' ? <AllNotes /> : selectedValue === 'Избранное' ? <SelectedNotes /> : <Category fill={selectedIcon}/> }

@@ -57,6 +57,7 @@ function NotesSort({ categories, defaultValue, icon, setCategory }) {
     const [warning, setWarning] = useState(false);
     // Состояние модального окна с выбором цвета
     const [chooseColor, setChooseColor] = useState(false);
+    const categoriesRef = React.useRef();
 
     const onSelectCategory = (icon, text) => {
         setSelectedIcon(icon);
@@ -117,6 +118,16 @@ function NotesSort({ categories, defaultValue, icon, setCategory }) {
             });
         }
     }, [modal]);
+
+    useEffect(() => {
+        const closeCategoriesPopup = e => {
+            if (!e.path.includes(categoriesRef.current)) {
+                setFilterVisible(false);
+            }
+        };
+
+        document.body.addEventListener('click', closeCategoriesPopup);
+    }, []);
 
     return (
         <>
@@ -198,7 +209,7 @@ function NotesSort({ categories, defaultValue, icon, setCategory }) {
                     <Button onClick={onAddCategory} disabled={addDisabled} text="Добавить" />
                 </div>
             </Modal>
-            <div className={styles.notesFilter}>
+            <div ref={categoriesRef} className={styles.notesFilter}>
                 <button onClick={() => setFilterVisible(!filterVisible)} type='button' className={styles.notesFilterSelected}>
                     <div className={styles.selectedIcon}>
                         <Category fill={selectedIcon} />
