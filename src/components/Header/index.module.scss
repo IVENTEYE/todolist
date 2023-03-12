@@ -7,10 +7,15 @@
     transition: background-color 0.2s 0.01s ease-in-out;
     padding: 15px 20px;
     border-radius: 4px 4px 0px 0px;
+    will-change: padding;
     &Title {
         color: var(--main-color);
         font-size: 22px;
         font-weight: 600;
+        will-change: font-size;
+    }
+    @media (min-width: 539.99px) {
+        position: relative;
     }
     @media (max-width: 539.99px) {
         border-radius: 0;
@@ -39,6 +44,7 @@
     }
 }
 
+
 .themeButton {
     width: 20px;
     height: 20px;
@@ -47,7 +53,8 @@
     right: 20px;
     transform: translateY(-50%);
     z-index: 1;
-
+    transition: width 50ms ease-in-out, height 50ms ease-in-out;
+    will-change: width, height;
     svg {
         path {
             fill: #fff;

@@ -9,7 +9,7 @@ import { ReactComponent as Category } from '../../icons/bookmark.svg'
 import { ReactComponent as AllNotes } from '../../icons/notes.svg'
 import { ReactComponent as SelectedNotes } from '../../icons/star_solid.svg'
 
-function Categories({ filter, categories, setCategory, onFilter }) {
+function Categories({ fixed, filter, categories, setCategory, onFilter }) {
     const { inputValue } = useContext(AppContext);
     const [filterVisible, setFilterVisible] = useState(false);
     const [selectedIcon, setSelectedIcon] = useState('');
@@ -38,12 +38,16 @@ function Categories({ filter, categories, setCategory, onFilter }) {
 
     useEffect(() => {
         const closeCategoriesPopup = e => {
-            if (!e.path.includes(categoriesRef.current)) {
+            if (!e.composedPath().includes(categoriesRef.current)) {
                 setFilterVisible(false);
             }
         };
 
         document.body.addEventListener('click', closeCategoriesPopup);
+
+        return () => {
+            document.body.removeEventListener('click', closeCategoriesPopup);
+        };
     }, []);
 
     const onSelectCategory = (icon, text) => {
@@ -53,7 +57,7 @@ function Categories({ filter, categories, setCategory, onFilter }) {
     }
 
     return (
-        <div ref={categoriesRef} className={styles.notesFilter}>
+        <div ref={categoriesRef} className={styles.notesFilter + ' ' + fixed ? styles.fixed : ''}>
             <button onClick={() => setFilterVisible(!filterVisible)} type='button' className={styles.notesFilterSelected}>
                 <div className={styles.selectedIcon}>
                     { selectedValue === 'Все заметки' ? <AllNotes /> : selectedValue === 'Избранное' ? <SelectedNotes /> : <Category fill={selectedIcon}/> }
@@ -61,7 +65,7 @@ function Categories({ filter, categories, setCategory, onFilter }) {
                 <span>{selectedValue}</span>
             </button>
             <div 
-                className={filterVisible ? styles.notesFilterBody + ' ' + styles._active : styles.notesFilterBody} 
+                className={(filterVisible ? styles.notesFilterBody + ' ' + styles._active : styles.notesFilterBody) + ' ' + (fixed ? styles.fixed : '')} 
                 style={filter.length === 0 ? {left: 3 + 'px'} : {right: 0}}
                 >
                 <div className={styles.filter}>
@@ -85,6 +89,7 @@ function Categories({ filter, categories, setCategory, onFilter }) {
                                     key={category.text}
                                     icon={category.icon}
                                     text={category.text}
+                                    activeCategory={selectedValue}
                                     onSelect={onSelectCategory}
                                     onAdd={setCategory}
                                     onFilter={onFilter}

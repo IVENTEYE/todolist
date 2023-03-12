@@ -1,0 +1,45 @@
+.notesInfo {
+    position: relative;
+    height: 19px;
+    margin: 0 3px 10px 3px;
+    &Items {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        font-size: 15px;
+        color: var(--sub-color);
+        transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        top: 0;
+        will-change: top, padding;
+        background-color: var(--body-color);
+    }
+    @media (min-width: 539.99px) {
+        margin-bottom: 0;
+    }
+    @media (max-width: 539.99px) {
+        &.fixed {
+            .notesInfoItems {
+                position: fixed;
+                top: 57px;
+                z-index: 4;
+                padding: 10px 0;
+                width: calc(100% - 36px);
+            }
+            .notesFilterBody {
+                transform: translateY(14px);
+            }
+        }
+        &Items {
+            position: absolute;
+            width: 100%;
+        }
+    }
+    @media (max-width: 425px) {
+        &.fixed {
+            .notesInfoItems {
+                width: calc(100% - 26px);
+            }
+        }
+    }
+}

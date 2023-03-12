@@ -121,12 +121,16 @@ function NotesSort({ categories, defaultValue, icon, setCategory }) {
 
     useEffect(() => {
         const closeCategoriesPopup = e => {
-            if (!e.path.includes(categoriesRef.current)) {
+            if (!e.composedPath().includes(categoriesRef.current)) {
                 setFilterVisible(false);
             }
         };
 
         document.body.addEventListener('click', closeCategoriesPopup);
+
+        return () => {
+            document.body.removeEventListener('click', closeCategoriesPopup);
+        };
     }, []);
 
     return (

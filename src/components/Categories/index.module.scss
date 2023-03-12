@@ -2,6 +2,13 @@
     @media (min-width: 425px) {
         position: relative;
     }
+    @media (max-width: 539.99px) {
+        &Body {
+            &.fixed {
+                transform: translateY(8px) !important;
+            }
+        }
+    }
 }
 
 .notesFilterSelected {

@@ -13,6 +13,7 @@ import Modal from './components/Modal';
 import Button from './components/Button'
 import Prompt from './components/Prompt';
 import Header from './components/Header';
+import NotesInfo from './components/NotesInfo';
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -85,8 +86,10 @@ function App() {
   // Определение мобильного устройства
   let isMobile = { Android: function () { return navigator.userAgent.match(/Android/i); }, BlackBerry: function () { return navigator.userAgent.match(/BlackBerry/i); }, iOS: function () { return navigator.userAgent.match(/iPhone|iPad|iPod/i); }, Opera: function () { return navigator.userAgent.match(/Opera Mini/i); }, Windows: function () { return navigator.userAgent.match(/IEMobile/i); }, any: function () { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); } };
 
-  window.addEventListener('scroll', hideElements);
-
+  if (window.innerWidth < 540) {
+    window.addEventListener('scroll', hideElements);
+  }
+  
   const onRedactNote = (id, title, description, category, icon) => {
     setNoteRedact(true);
     setNoteRedactId(id);
@@ -347,24 +350,25 @@ function App() {
                 label="Заметки"
                 image={[<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 6V21.0013C1 21.5614 1.45107 22 2.00748 22H16V17.0059C16 15.8866 16.8945 15 17.9979 15H22V6H1ZM1 5V1.99875C1 1.44715 1.43861 1 1.99875 1H21.0013C21.5528 1 22 1.44995 22 2.00685V5H1ZM16.5 23H2.00011C0.895478 23 0 22.0984 0 20.9991V2.00086C0 0.895817 0.901627 0 2.00086 0H20.9991C22.1042 0 23 0.894514 23 1.99406V15.5V16L17 23H16.5ZM17 21.5V17.0088C17 16.4516 17.4507 16 17.9967 16H21.7L17 21.5ZM3 9V10H20V9H3ZM3 12V13H20V12H3ZM3 15V16H14V15H3ZM3 18V19H14V18H3Z" fill="#b7b7b7" /></svg>]}
               >
-                {!noteRedact ? (notes.length >= 2 ? <Field className={styles.noteField} placeholder="Поиск заметок" /> : null) : null}
-                {!noteRedact ?
-                  <div className={styles.notesInfo}>
-                    {notes.length > 0 && inputValue === '' ?
-                      <>
-                        <div className={styles.noteCounter}>Всего заметок: {notes.length}</div>
-                        {notes.length > 1 && <Categories filter={filterItems} categories={categories} onFilter={filterCategory} />}
-                      </> : null
-                    }
-                  </div>
-                  : null
-                }
-                {!noteRedact ? notesMapped : <NoteRedact redactCategories={categories} />}
-                {!noteRedact ?
-                  <button className={`${currentNotes.length > 4 ? styles.addBtn + ' ' + styles._sticky : styles.addBtn} ${elementsHidden ? styles.hidden : ''}`} onClick={() => setNoteRedact(true)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z" /></svg>
-                  </button>
-                  : null}
+                <div className={styles.topbar}>
+                  {!noteRedact ? (notes.length >= 2 ? <Field className={styles.noteField} placeholder="Поиск заметок" /> : null) : null}
+                  {!noteRedact ?
+                    <NotesInfo 
+                      notes={notes} 
+                      inputValue={inputValue}
+                      filterItems={filterItems}
+                      categories={categories}
+                      filterCategory={filterCategory}
+                    />
+                    : null
+                  }
+                </div>
+                  {!noteRedact ? notesMapped : <NoteRedact redactCategories={categories} />}
+                  {!noteRedact ?
+                    <button className={`${currentNotes.length > 4 ? styles.addBtn + ' ' + styles._sticky : styles.addBtn} ${elementsHidden ? styles.hidden : ''}`} onClick={() => setNoteRedact(true)}>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z" /></svg>
+                    </button>
+                    : null}
               </div>
             </Navbar>
             {/* Toolbar */}
