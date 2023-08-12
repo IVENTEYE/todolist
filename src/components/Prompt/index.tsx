@@ -1,12 +1,16 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import Button from '../Button'
 import styles from './index.module.scss'
 
-function Prompt({ image, text }) {
+type PromptPropsType = {
+    image: string;
+    text: string;
+}
+
+const Prompt: React.FC<PromptPropsType> = ({ image, text }) => {
     const [promptVisible, setPromptVisible] = useState(false);
-    const [deferredPrompt, setDeferredPrompt] = useState(null);
-    const [userChoice, setUserChoise] = useState(null);
+    const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+    const [userChoice, setUserChoise] = useState<any>(null);
 
     const closePrompt = () => {
         setPromptVisible(false);
@@ -15,7 +19,7 @@ function Prompt({ image, text }) {
     };
 
     useEffect(() => {
-        const userCh = JSON.parse(localStorage.getItem('userChoice'));
+        const userCh = JSON.parse(localStorage.getItem('userChoice')!);
         if (userCh) {
             setUserChoise(userCh);
         }

@@ -2,7 +2,13 @@ import React from 'react'
 // import blank from './img/blank-paper.png';
 import styles from './index.module.scss'
 
-function Placeholder({ image, title, text }) {
+type PlaceholderPropsType = {
+    image: string;
+    title: string;
+    text: string;
+}
+
+const Placeholder: React.FC<PlaceholderPropsType> = ({ image, title, text }) => {
     return (
         <div className={styles.placeholder}>
             <div className={styles.placeholder__wrapper}>

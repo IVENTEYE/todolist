@@ -51,6 +51,7 @@ button {
   --box-shadow: rgb(34 60 80 / 20%);
   --prompt-bg: #fff;
   --donate-bg-image: url('../public/img/donate__bg.svg');
+  --draggable-color: #f84f4f;
 }
 
 [data-theme='dark'] {
@@ -69,12 +70,12 @@ button {
   --box-shadow: rgb(12 28 46 / 54%);
   --prompt-bg: #2e3b4a;
   --donate-bg-image: url('../public/img/donate__bg-dark.svg');
+  --draggable-color: #e7cafc;
 }
 
 ul, li {
   margin: 0;
   padding: 0;
-  list-style: none;
 }
 
 body {
@@ -105,4 +106,25 @@ code {
 
 .hidden {
   transform: translateY(100%);
+}
+
+.ProseMirror {
+  height: 100%;
+  font-size: 17px;
+  color: var(--second-color);
+  width: calc(100% - 6px);  
+  outline: none;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: var(--placeholder-color);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.bullet-list li {
+  margin-left: 18px !important;
+  list-style: disc !important;
 }

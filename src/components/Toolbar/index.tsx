@@ -1,11 +1,17 @@
 import React from 'react'
 import { useContext } from 'react'
+import { useSelector } from 'react-redux'
 import AppContext from '../../context'
 import styles from './index.module.scss'
 
-function Toolbar() {
-    const { onSelectNote, onRemoveNote, noteRedactId, notes, setConfirmModal } = useContext(AppContext);
-    const noteSelectedValue = notes.filter(note => note.id === noteRedactId)[0].selected;
+type noteType = {
+    id: number
+}
+
+const Toolbar: React.FC = () => {
+    const { onSelectNote, notes, setConfirmModal }: any = useContext(AppContext);
+    const noteRedactId = useSelector((state: any) => state.redact.id);
+    const noteSelectedValue = notes.filter((note: noteType) => note.id === noteRedactId)[0].selected;
     return (
         <div className={styles.toolbar}>
             <div className={styles.toolbar__items}>

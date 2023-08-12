@@ -3,9 +3,22 @@ import checkContext from '../../checkContext';
 import AppContext from '../../context';
 import styles from "./styles.module.scss"
 
-function Checkbox({ taskObj }) {
-  const { taskState, setTaskState } = useContext(checkContext);
-  const { onChangeStateTask } = useContext(AppContext);
+type CheckboxPropsType = {
+  checkState: boolean;
+  id: string;
+  title: string;
+  day: string;
+  month: string;
+  dateVisible: boolean;
+}
+
+type TaskObjType = {
+  taskObj: CheckboxPropsType;
+}
+
+const Checkbox: React.FC<TaskObjType> = ({ taskObj }) => {
+  const { taskState, setTaskState }: any = useContext(checkContext);
+  const { onChangeStateTask }: any = useContext(AppContext);
   return (
     <label className={styles.checkbox}>
         <input 

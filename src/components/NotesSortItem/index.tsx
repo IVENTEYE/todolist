@@ -2,9 +2,18 @@ import React from 'react'
 import styles from './index.module.scss'
 import { ReactComponent as Category } from '../../icons/bookmark.svg'
 
-function NotesSortItem( { icon, text, onSelect, onAdd, onRemove } ) {
+type SortPropsType = {
+    icon: string;
+    text: string;
+    onSelect?: (icon: string, text: string) => void;
+    onAdd?: (icon: string, text: string) => void;
+    controls?: any;
+    onRemove?: (text: string) => void;
+}
+
+const NotesSortItem: React.FC<SortPropsType> = ( { icon, text, onSelect, onAdd, controls, onRemove } ) => {
     return (
-        <li className={styles.filterItem}>
+        <div className={styles.filterItem}>
             <button 
                 type='button' 
                 className={styles.filterItemBtn}
@@ -25,7 +34,8 @@ function NotesSortItem( { icon, text, onSelect, onAdd, onRemove } ) {
                     <Category fill={icon}/>
                 </div>
                 <p className={styles.filterItemText}>{text}</p>
-                { onRemove && 
+                <div style={{ touchAction: "none" }} onPointerDown={(e) => controls.start(e)} className={styles.filterItemDraggable}></div>
+                { onRemove && text !== 'Без категории' && 
                     <div
                         className={styles.removeCategory}
                         onClick={() => onRemove(text)}
@@ -34,7 +44,7 @@ function NotesSortItem( { icon, text, onSelect, onAdd, onRemove } ) {
                     </div>
                 }
             </button>
-        </li>
+        </div>
     )
 }
 

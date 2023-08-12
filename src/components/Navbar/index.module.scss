@@ -79,6 +79,7 @@
 }
 
 .todo__contentWrapper {
+    position: relative;
     overflow-x: hidden;
     overflow-y: auto;
     display: flex;
@@ -101,8 +102,7 @@
     @media (min-width: 540px) {
         & {
             position: relative;
-            max-height: 380px;
-            padding: 0 0 10px 0;
+            max-height: 400px;
         }
     }
 }

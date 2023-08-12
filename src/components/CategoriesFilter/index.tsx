@@ -1,21 +1,26 @@
 import React from 'react'
 import styles from './index.module.scss'
-import { ReactComponent as Category } from '../../icons/bookmark.svg'
 
-function CategoriesItem( { icon, text, onSelect, onFilter } ) {
+export type FilterProps = {
+    icon: string;
+    text: string;
+    onSelect: (icon: string, text: string) => void;
+    onFilter: (text: string) => void;
+}
 
+const CategoriesFilter: React.FC<FilterProps> = ( { icon, text, onSelect, onFilter } ) => {
     return (
         <li className={styles.filterItem}>
             <button 
                 type='button' 
                 className={styles.filterItemBtn}
-                onClick={(e) => {
+                onClick={() => {
                     onSelect(icon, text);
                     onFilter(text);
                 }}
             >
                 <div className={styles.filterItemIcon}>
-                    <Category fill={icon}/>
+                    {icon}
                 </div>
                 <p className={styles.filterItemText}>{text}</p>
             </button>
@@ -23,4 +28,4 @@ function CategoriesItem( { icon, text, onSelect, onFilter } ) {
     )
 }
 
-export default CategoriesItem
+export default CategoriesFilter

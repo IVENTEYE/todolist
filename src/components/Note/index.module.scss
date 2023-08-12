@@ -8,12 +8,15 @@
     transition: all 0.2s ease-in-out;
     will-change: contents;
     position: relative;
+    z-index: 1;
+    user-select: none;
     &__category {
         position: absolute;
         top: 0;
         right: 10px;
         width: 15px;
         height: 15px;
+        z-index: 3;
     }
     &__items {
         display: flex;
@@ -50,6 +53,34 @@
     &__date {
         font-size: 14px;
     }
+    &__draggable {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 85px;
+        height: 100%;
+        background-color: var(--image-bg);
+        z-index: 2;
+        border-radius: 0 4px 4px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: all 0.2s ease-in-out;
+        cursor: move;
+        svg {
+            width: 28px;
+            height: 28px;
+            path {
+                fill: var(--draggable-color);
+                opacity: 0.4;
+            }
+        }
+    }
+}
+
+.note__draggableActive {
+    opacity: 1;
 }
 
 .selected {

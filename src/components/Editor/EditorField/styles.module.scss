@@ -1,0 +1,11 @@
+.editor {
+    &__content {
+        height: calc(100% - 35px);
+        font-size: 17px;
+        color: var(--second-color);
+        width: calc(100% - 6px);
+        outline: none;
+        border: none;
+        background: transparent;
+    }
+}

@@ -170,7 +170,23 @@
 }
 
 .categoriesList {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
     margin-bottom: 30px;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 5px;
+        border-radius: 5px;
+        background-color: rgb(200, 200, 200);
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgb(143, 143, 143);
+    }
+    @media (min-width: 424.99px) {
+        max-height: 300px;
+    }
     @media (max-width: 424.98px) {
         & {
             flex: 1 1 auto;
@@ -202,6 +218,8 @@
     opacity: 0;
     visibility: hidden;
     transition: all 0.2s ease-in-out;
+    list-style: none;
+    z-index: 2;
     &._active {
         bottom: 27px;
         opacity: 1;

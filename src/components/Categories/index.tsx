@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import CategoriesItem from '../CategoriesItem';
-import CategoriesFilter from '../CategoriesFilter';
+import CategoriesItem from '../CategoriesItem/index.tsx';
+import CategoriesFilter from '../CategoriesFilter/index.tsx';
 import styles from './index.module.scss'
 import { useContext } from 'react';
 import AppContext from '../../context';
@@ -9,13 +9,24 @@ import { ReactComponent as Category } from '../../icons/bookmark.svg'
 import { ReactComponent as AllNotes } from '../../icons/notes.svg'
 import { ReactComponent as SelectedNotes } from '../../icons/star_solid.svg'
 
-function Categories({ fixed, filter, categories, setCategory, onFilter }) {
-    const { inputValue } = useContext(AppContext);
+type CategoriesPropsType = {
+    filter: Array<Object>;
+    categories: Array<Object>;
+    setCategory?: (icon: string, text: string) => void;
+    onFilter: () => void;
+}
+
+const Categories: React.FC<CategoriesPropsType> = ({ filter, categories, setCategory, onFilter }) => {
+    const { inputValue }: any = useContext(AppContext);
     const [filterVisible, setFilterVisible] = useState(false);
     const [selectedIcon, setSelectedIcon] = useState('');
     const [selectedValue, setSelectedValue] = useState('Все заметки');
-    const categoriesRef = React.useRef();
+    const categoriesRef = React.useRef<HTMLDivElement>(null);
 
+    const categoriesAll = categories.filter((category: any) => category.text !== "Без категории"),
+          categoriesBottom = categories.filter((category: any) => category.text === "Без категории"),
+          filteredCategories = [...categoriesAll, ...categoriesBottom];
+    
     useEffect(() => {
         const filterIcon = localStorage.getItem('filterIcon');
         const filterValue = localStorage.getItem('filterValue');
@@ -37,7 +48,7 @@ function Categories({ fixed, filter, categories, setCategory, onFilter }) {
     }, [selectedValue]);
 
     useEffect(() => {
-        const closeCategoriesPopup = e => {
+        const closeCategoriesPopup = (e: any) => {
             if (!e.composedPath().includes(categoriesRef.current)) {
                 setFilterVisible(false);
             }
@@ -50,14 +61,14 @@ function Categories({ fixed, filter, categories, setCategory, onFilter }) {
         };
     }, []);
 
-    const onSelectCategory = (icon, text) => {
+    const onSelectCategory = (icon: string, text: string) => {
         setSelectedIcon(icon);
         setSelectedValue(text);
         setFilterVisible(false);
     }
 
     return (
-        <div ref={categoriesRef} className={styles.notesFilter + ' ' + fixed ? styles.fixed : ''}>
+        <div ref={categoriesRef} className={styles.notesFilter}>
             <button onClick={() => setFilterVisible(!filterVisible)} type='button' className={styles.notesFilterSelected}>
                 <div className={styles.selectedIcon}>
                     { selectedValue === 'Все заметки' ? <AllNotes /> : selectedValue === 'Избранное' ? <SelectedNotes /> : <Category fill={selectedIcon}/> }
@@ -65,12 +76,12 @@ function Categories({ fixed, filter, categories, setCategory, onFilter }) {
                 <span>{selectedValue}</span>
             </button>
             <div 
-                className={(filterVisible ? styles.notesFilterBody + ' ' + styles._active : styles.notesFilterBody) + ' ' + (fixed ? styles.fixed : '')} 
+                className={filterVisible ? styles.notesFilterBody + ' ' + styles._active : styles.notesFilterBody} 
                 style={filter.length === 0 ? {left: 3 + 'px'} : {right: 0}}
                 >
                 <div className={styles.filter}>
                         <ul className={styles.filterNotes}>
-                            {filter.map(item => {
+                            {filter.map((item: any) => {
                                 return (
                                     <CategoriesFilter
                                         key={item.text}
@@ -83,15 +94,13 @@ function Categories({ fixed, filter, categories, setCategory, onFilter }) {
                             })}
                         </ul>
                     <ul className={styles.filterCategories}>
-                        {categories.map(category => {
+                        {filteredCategories.map((category: any) => {
                             return (
                                 <CategoriesItem
                                     key={category.text}
                                     icon={category.icon}
                                     text={category.text}
-                                    activeCategory={selectedValue}
                                     onSelect={onSelectCategory}
-                                    onAdd={setCategory}
                                     onFilter={onFilter}
                                 />
                             )

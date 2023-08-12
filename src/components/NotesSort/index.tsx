@@ -3,14 +3,25 @@ import { useEffect } from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import AppContext from '../../context';
-import Button from '../Button';
-import Modal from '../Modal';
-import NotesSortItem from '../NotesSortItem';
+import Button from '../Button/index.tsx'
+import Modal from '../Modal/index.tsx';
+import NotesSortItem from '../NotesSortItem/index.tsx';
 import styles from './index.module.scss'
 import { ReactComponent as Category } from '../../icons/bookmark.svg'
+import { useDispatch } from 'react-redux';
+import { removeCategory } from '../../redux/slices/notesSlice';
+import { Reorder, useDragControls } from 'framer-motion';
 
-function NotesSort({ categories, defaultValue, icon, setCategory }) {
-    const { setCategories, setNotes } = useContext(AppContext);
+type SortPropsType = {
+    categories: Array<Object>;
+    defaultValue: string;
+    icon: string;
+    setCategory: (icon: string, text: string) => void;
+}
+
+const NotesSort: React.FC<SortPropsType> = ({ categories, defaultValue, icon, setCategory }) => {
+    const dispatch = useDispatch();
+    const { setCategories }: any = useContext(AppContext);
     // Состояние фильтра
     const [filterVisible, setFilterVisible] = useState(false);
     // Начальное значение категории
@@ -57,9 +68,13 @@ function NotesSort({ categories, defaultValue, icon, setCategory }) {
     const [warning, setWarning] = useState(false);
     // Состояние модального окна с выбором цвета
     const [chooseColor, setChooseColor] = useState(false);
-    const categoriesRef = React.useRef();
+    const categoriesRef = React.useRef<HTMLDivElement>(null);
 
-    const onSelectCategory = (icon, text) => {
+    const categoriesAvailable = categories.filter((category: any) => category.text !== "Без категории"),
+          categoriesUnavailable = categories.filter((category: any) => category.text === "Без категории"),
+          filteredCategories = [...categoriesAvailable, ...categoriesUnavailable];
+
+    const onSelectCategory = (icon: string, text: string) => {
         setSelectedIcon(icon);
         setSelectedValue(text);
         setFilterVisible(false);
@@ -77,36 +92,37 @@ function NotesSort({ categories, defaultValue, icon, setCategory }) {
         setModal(!modal);
         resetValues();
     };
+    // {icon: "#b7b7b7", text: "Без категории"}
+    // useEffect(() => {
+    //     setCategories((prev: any) => {
+    //         return {
+    //             ...prev,
+    //             icon: "#b7b7b7",
+    //             text: "Без категории"
+    //         }
+    //     })
+    // }, [categories]);
 
     // Добавление категории
     const onAddCategory = () => {
         // Проверка на повторяющиеся категории
-        if (categories.filter(category => category.text === newCategoryValue).length > 0) {
+        if (categories.filter((category: any) => category.text === newCategoryValue).length > 0) {
             setAddDisabled(true);
             setWarning(true);
         } else {
-            setCategories(prev => [...prev.filter(category => category.text !== 'Без категории'), {
+            setCategories((prev: Array<object>) => [...prev.filter((category: any) => category.text !== 'Без категории'), {
                 icon: addColorValue,
                 text: newCategoryValue
-            }, ...prev.filter(category => category.text === 'Без категории')]);
+            }, ...prev.filter((category: any) => category.text === 'Без категории')]);
             resetValues();
             setAddColorValue(categoryColors[0].color);
         }
     };
 
     // Удаление категории
-    const onRemoveCategory = (textCategory) => {
-        setCategories(prev => prev.filter(category => category.text !== textCategory));
-        setNotes(prev => prev.map(item => {
-            if (item.category === textCategory) {
-                return {
-                    ...item,
-                    categoryIcon: '#b7b7b7',
-                    category: 'Без категории'
-                }
-            }
-            return item
-        }));
+    const onRemoveCategory = (textCategory: string) => {
+        setCategories((prev: Array<object>) => prev.filter((category: any) => category.text !== textCategory));
+        dispatch(removeCategory({textCategory}));
     }
 
     useEffect(() => {
@@ -120,7 +136,7 @@ function NotesSort({ categories, defaultValue, icon, setCategory }) {
     }, [modal]);
 
     useEffect(() => {
-        const closeCategoriesPopup = e => {
+        const closeCategoriesPopup = (e: any) => {
             if (!e.composedPath().includes(categoriesRef.current)) {
                 setFilterVisible(false);
             }
@@ -133,22 +149,38 @@ function NotesSort({ categories, defaultValue, icon, setCategory }) {
         };
     }, []);
 
+    const categoriesAnimation = {
+        initial: {
+            opacity: 0,
+          },
+          animate: {
+            opacity: 1,
+          },
+          exit: {
+            opacity: 0,
+          }
+    };
+
+    const controls = useDragControls();
+
     return (
         <>
             <Modal visible={modal}>
                 <h2 className={styles.title}>Изменение категорий</h2>
-                <ul className={styles.categoriesList}>
-                    {categories.filter(category => category.text !== 'Без категории').map(category => {
+                <Reorder.Group axys="y" values={categories} onReorder={setCategories} className={styles.categoriesList}>
+                    {filteredCategories.map((category: any) => {
                         return (
-                            <NotesSortItem
-                                key={category.text}
-                                icon={category.icon}
-                                text={category.text}
-                                onRemove={onRemoveCategory}
-                            />
-                        )
+                            <Reorder.Item {...categoriesAnimation} key={category.text} value={category} style={category.text === 'Без категории' ? {pointerEvents: 'none'} : {}}>
+                                <NotesSortItem
+                                    key={category.text}
+                                    icon={category.icon}
+                                    text={category.text}
+                                    onRemove={onRemoveCategory}
+                                />
+                            </Reorder.Item>
+                        );
                     })}
-                </ul>
+                </Reorder.Group>
                 <div className={styles.addCategory}>
                     <ul className={chooseColor ? styles.chooseColor + ' ' + styles._active : styles.chooseColor}>
                         {
@@ -159,9 +191,10 @@ function NotesSort({ categories, defaultValue, icon, setCategory }) {
                                             type='button'
                                             className={styles.chooseColorBtn}
                                             onClick={(e) => {
-                                                const targetColor = !e.target.getAttribute('fill') ? e.target.querySelector('path').getAttribute('fill') : e.target.getAttribute('fill');
+                                                const targetColor: string = !e.target.getAttribute('fill') ? e.target.querySelector('path').getAttribute('fill') : e.target.getAttribute('fill');
                                                 setAddColorValue(targetColor);
                                                 setChooseColor(false);
+                                                console.log(typeof e.target);
                                             }}
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill={color.color} d="M48 0H336C362.5 0 384 21.49 384 48V487.7C384 501.1 373.1 512 359.7 512C354.7 512 349.8 510.5 345.7 507.6L192 400L38.28 507.6C34.19 510.5 29.32 512 24.33 512C10.89 512 0 501.1 0 487.7V48C0 21.49 21.49 0 48 0z" /></svg>
@@ -200,7 +233,7 @@ function NotesSort({ categories, defaultValue, icon, setCategory }) {
                                 onAddCategory();
                             }
                         }}
-                        style={warning ? { borderColor: 'red' } : null}
+                        style={warning ? { borderColor: 'red' } : undefined}
                     />
                     <p className={warning ? styles.inputWarning + ' ' + styles._active : styles.inputWarning}>Такая категория существует.</p>
                 </div>
@@ -226,7 +259,7 @@ function NotesSort({ categories, defaultValue, icon, setCategory }) {
                 >
                     <div className={styles.filter}>
                         <ul className={styles.filterCategories}>
-                            {categories.map(category => {
+                            {filteredCategories.map((category: any) => {
                                 return (
                                     <NotesSortItem
                                         key={category.text}
