@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/todolist/static/css/main.73f275cb.css",
-    "main.js": "/todolist/static/js/main.f22bd622.js",
+    "main.css": "/todolist/static/css/main.9bdb72bd.css",
+    "main.js": "/todolist/static/js/main.b050b93c.js",
     "static/media/donate__bg-dark.svg": "/todolist/static/media/donate__bg-dark.ba211ea7a761062df79b.svg",
     "static/media/donate__bg.svg": "/todolist/static/media/donate__bg.9b7fbb3a8c7d6184e26d.svg",
     "static/media/confetti.png": "/todolist/static/media/confetti.6c5caec8a881ee17e9f6.png",
@@ -10,11 +10,11 @@
     "static/media/star_solid.svg": "/todolist/static/media/star_solid.e497d3d8e9c6746c37bc5bc8bd5694b1.svg",
     "static/media/notes.svg": "/todolist/static/media/notes.0e03acc9877e3f1afcb9bfec8ec03083.svg",
     "static/media/bookmark.svg": "/todolist/static/media/bookmark.7464ac4f4ade6d005542ee566b1c2771.svg",
-    "main.73f275cb.css.map": "/todolist/static/css/main.73f275cb.css.map",
-    "main.f22bd622.js.map": "/todolist/static/js/main.f22bd622.js.map"
+    "main.9bdb72bd.css.map": "/todolist/static/css/main.9bdb72bd.css.map",
+    "main.b050b93c.js.map": "/todolist/static/js/main.b050b93c.js.map"
   },
   "entrypoints": [
-    "static/css/main.73f275cb.css",
-    "static/js/main.f22bd622.js"
+    "static/css/main.9bdb72bd.css",
+    "static/js/main.b050b93c.js"
   ]
 }
