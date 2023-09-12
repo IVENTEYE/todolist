@@ -58,6 +58,9 @@
 .createCategory {
     margin-top: 8px;
     padding: 0 5px;
+    ul, li {
+        list-style: none;
+    }
 }
 
 .filterNotes {

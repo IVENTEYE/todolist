@@ -1,23 +1,25 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setValue } from '../../redux/slices/searchSlice';
+import { setValue } from '../../redux/slices/inputSlice.ts';
 import styles from './index.module.scss'
 
 type FieldPropsType = {
-    action: () => void;
+    action?: () => void;
     setButton?: boolean;
     placeholder: string;
     className?: string;
+    type?: string;
 }
 
-const Field: React.FC<FieldPropsType> = ({ action, setButton, placeholder, className }) => {
-    const inputValue = useSelector((state: any) => state.search.value);
+const Field: React.FC<FieldPropsType> = ({ action, setButton, placeholder, className, type = 'text' }) => {
+    const inputValue = useSelector((state: any) => state.input.value);
     const dispatch = useDispatch();
     return (
         <div className={styles.todo__field + ' ' + className} style={!setButton ? {gridTemplateColumns: 'calc(100% - 3px)'} : undefined}>
             <div className={styles.todo__fieldWrapper}>
                 <input
-                    type="text"
+                    name={type}
+                    type={type}
                     className={styles.todoInput}
                     placeholder={placeholder}
                     value={inputValue}
@@ -26,7 +28,9 @@ const Field: React.FC<FieldPropsType> = ({ action, setButton, placeholder, class
                     }}
                     onKeyDown={setButton ? (e) => {
                         if (e.key === 'Enter') {
-                            action();
+                            if (action) {
+                                action();
+                            }
                         }
                     } : undefined}
                     style={!setButton ? {borderRadius: '3px'} : undefined}
@@ -43,7 +47,9 @@ const Field: React.FC<FieldPropsType> = ({ action, setButton, placeholder, class
                     type='button'
                     className={styles.todoButton}
                     onClick={() => {
-                        action();
+                        if (action) {
+                            action();
+                        }
                     }}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z" /></svg>

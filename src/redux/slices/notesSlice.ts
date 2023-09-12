@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { INote } from '../../types';
 
 const initialState = {
   items: [],
@@ -8,15 +9,15 @@ const notesSlice = createSlice({
   name: 'notes',
   initialState,
   reducers: {
-    addNote(state, action) {
+    addNote(state, action: PayloadAction<INote>) {
       state.items.unshift(action.payload);
     },
     removeNote(state, action) {
         state.items = state.items.filter(note => note.id !== action.payload.noteRedactId)
     },
     updateNote(state, action) {
-      state.items = state.items.map((note) => {
-        if (note.id === action.payload.id) {
+      state.items = state.items.map((note: INote) => {
+        if (note.id === action.payload.noteId) {
           return {
             ...note,
             day: action.payload.noteGetDate,
@@ -31,7 +32,7 @@ const notesSlice = createSlice({
       });
     },
     selectNote(state, action) {
-        state.items = state.items.map((note) => {
+        state.items = state.items.map((note: INote) => {
             if (note.id === action.payload.noteRedactId) {
                 return {
                     ...note,
@@ -53,10 +54,10 @@ const notesSlice = createSlice({
             return note;
         });
     },
-    localStorageNotes(state, action) {
+    localStorageNotes(state, action: PayloadAction<INote[]>) {
       state.items = action.payload;
     },
-    reorderItem(state, action) {
+    reorderItem(state, action: PayloadAction<INote[]>) {
       state.items = action.payload;
     },
   },

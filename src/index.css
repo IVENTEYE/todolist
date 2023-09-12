@@ -78,6 +78,11 @@ ul, li {
   padding: 0;
 }
 
+.ordered-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
 body {
   display: flex;
   flex-direction: column;

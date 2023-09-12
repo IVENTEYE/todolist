@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ITask } from '../../types';
+
 
 const initialState = {
   items: [],
@@ -8,10 +10,10 @@ const taskSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    loadLocalStorage(state, action) {
-        state.items = action.payload;
+    loadLocalStorage(state, action: PayloadAction<ITask[]>) {
+      state.items = action.payload;
     },
-    addItem(state, { payload }) {
+    addItem(state, { payload }: PayloadAction<{}>) {
       const date = String(new Date().getDate());
       const month = String(new Date().getMonth());
 
@@ -24,12 +26,13 @@ const taskSlice = createSlice({
         }
         return task;
       });
+
       state.items.unshift(payload);
     },
     onRemoveItem(state, { payload }) {
-        const filteredTasks = state.items.filter(task => task.id !== payload.id);
+        const filteredTasks = state.items.filter(task => task.id !== payload.taskId);
         state.items = state.items.map(task => {
-          if (task.id === payload.id && task.dateVisible === payload.dateVisible) {
+          if (task.id === payload.taskId && task.dateVisible === payload.dateVisible) {
             filteredTasks.forEach((item, index) => index === 0 ? item.dateVisible = true : null);
           }
           return task
@@ -38,7 +41,7 @@ const taskSlice = createSlice({
     },
     onChangeStateItem(state, { payload }) {
       state.items = state.items.map(task => {
-        if (task.id === payload.id) {
+        if (task.id === payload.taskId) {
           return {
             ...task,
             checkState: !payload.state,
@@ -49,7 +52,7 @@ const taskSlice = createSlice({
     },
     onUpdateItem(state, { payload }) {
       state.items = state.items.map(task => {
-        if (task.id === payload.id) {
+        if (task.id === payload.taskId) {
           return {
             ...task,
             title: payload.title,

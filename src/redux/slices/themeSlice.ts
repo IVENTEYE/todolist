@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const initialState = {
     theme: '',
@@ -8,7 +8,7 @@ const themeSlice = createSlice({
     name: "theme",
     initialState,
     reducers: {
-        setTheme(state, action) {
+        setTheme(state, action: PayloadAction<string>) {
             state.theme = action.payload;
         }
     }

@@ -1,0 +1,142 @@
+.form {
+    background-color: var(--body-color);
+    box-shadow: 2px 6px 50px -24px rgba(0, 0, 0, 0.48);
+    padding: 20px 25px;
+    border-radius: 20px;
+    max-width: 430px;
+    width: calc(100% - 50px);
+    &Container {
+        overflow: hidden;
+        padding: 0 4px;
+    }
+    &Logo {
+        display: flex;
+        justify-content: center;
+        font-weight: 700;
+        margin-top: -45px;
+        margin-bottom: 20px;
+    }
+    &__title {
+        margin-bottom: 40px;
+        font-size: 25px;
+    }
+    &__field {
+        position: relative;
+        margin-bottom: 12px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        &Label {
+            font-weight: 700;
+            font-size: 15px;
+            margin: 14px 0 4px;
+            color: #0d0c22;
+        }
+        &Input {
+            width: calc(100% - 24px);
+            padding: 0 10px;  
+            border-radius: 12px;
+            border: 2px solid #e7e7e9;
+            outline: none;
+            transition: all 0.2s ease-in;
+            height: 46px;
+            &:focus {
+                box-shadow: 0 0 0 3px rgba(255, 7, 7, 0.1);
+                border-color: rgba(248, 79, 79, 0.4);
+            }
+            &:hover {
+                box-shadow: 0 0 0 3px rgba(255, 7, 7, 0.09);
+            }
+        }
+    }
+    &__btn {
+        width: 100%;
+        height: 56px;
+        padding: 0 24px;
+        background-color: #0d0c22;
+        color: #fff;
+        font-weight: 600;
+        font-size: 14px;
+        border-radius: 9999999px;
+        margin: 20px 0;
+        transition: background-color 0.2s ease-in;
+        border: none;
+        cursor: pointer;
+        &:hover {
+            background-color: #0d0c22da;
+        }
+    }
+    @media (max-width: 480px) {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        &Logo {
+            margin: 0 0 20px 0;
+        }
+    }
+}
+
+.googleBtn {
+    border: 1px solid #e7e7e9;
+    height: 56px;
+    padding: 0 24px;
+    border-radius: 9999999px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.divider {
+    height: 1px;
+    margin: 30px 0;
+    background-color: #e7e7e9;
+    color: #6e6d7a;
+    text-align: center;
+    padding: 0;
+    overflow: visible;
+    border: none;
+    &::after {
+        content: 'или войдите с помощью email';
+        display: inline-block;
+        position: relative;
+        top: -11px;
+        padding: 0 16px;
+        background: #fff;
+        font-size: 12px;
+    }
+}
+
+.passwordBtn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+}
+
+.authLink {
+    color: #3d3d4e;
+    text-align: center;
+    font-size: 14px;
+    p {
+        display: inline-block;
+    }
+    a {
+        text-decoration: underline;
+        color: #0d0c22;
+    }
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+}
+
+.wrong {
+    border-color: red;
+}

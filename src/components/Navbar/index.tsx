@@ -2,13 +2,14 @@ import React, { useContext, useState } from 'react'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AppContext from '../../context';
-import { setValue } from '../../redux/slices/searchSlice';
+import { setValue } from '../../redux/slices/inputSlice.ts';
 import { AnimatePresence, motion } from 'framer-motion';
 import styles from './index.module.scss'
+import { RootState } from '../../redux/store';
 
 const Navbar: React.FC<any> = ({ children }) => {
     const dispatch = useDispatch();
-    const noteRedact = useSelector((state: any) => state.redact.visible);
+    const noteRedact = useSelector((state: RootState) => state.redact.visible);
     const [activeTab, setActiveTab] = useState(children[0].props.label);
     const { elementsHidden }: any = useContext(AppContext);
 

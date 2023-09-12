@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss'
 import { ReactComponent as Category } from '../../icons/bookmark.svg'
 import { Reorder, useDragControls } from 'framer-motion';
+import { ref, remove, set } from 'firebase/database';
+import { db } from '../../firebase.ts';
+import { useSelector } from 'react-redux';
+import { useAuth } from '../../redux/hooks/useAuth.ts';
+import { RootState } from '../../redux/store';
 
 export type NoteTypes = {
     id: string;
@@ -33,8 +38,19 @@ const noteAnimation = {
       const [isDraggable, setIsDraggable] = useState(false);
       const months: string[] = 'января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря'.split(',');
       const nowMonth: string[] = months[month];
+      const notes = useSelector((state: RootState) => state.notes.items);
+      const userId = useSelector((state: RootState) => state.user.id);
+      const { isAuth } = useAuth();
       
     const controls = useDragControls();
+
+    useEffect(() => {
+        if (!isDraggable) {
+            if (isAuth) {
+                set(ref(db, 'notes/' + userId), notes);
+            }
+        }
+    }, [isDraggable]);
     return (
         <Reorder.Item dragListener={false} dragControls={controls} key={id} value={item} {...noteAnimation}>
             <div

@@ -1,4 +1,6 @@
 .todo__header {
+    display: flex;
+    align-items: center;
     position: sticky;
     top: 0;
     left: 0;
@@ -13,6 +15,7 @@
         font-size: 22px;
         font-weight: 600;
         will-change: font-size;
+        flex: 1 1 auto;
     }
     @media (min-width: 539.99px) {
         position: relative;
@@ -22,7 +25,7 @@
     }
     @media (max-width: 424.99px) {
         & {
-            padding: 15px 10px 15px 10px;
+            padding: 13px 10px 13px 10px
         }
     }
 }
@@ -50,7 +53,7 @@
     height: 20px;
     position: absolute;
     top: 50%;
-    right: 20px;
+    right: 50px;
     transform: translateY(-50%);
     z-index: 1;
     transition: width 50ms ease-in-out, height 50ms ease-in-out;
@@ -62,7 +65,7 @@
     }
 
     @media (max-width: 424.99px) {
-        right: 11px;
+        right: 42px;
     }
 
     &Moon {

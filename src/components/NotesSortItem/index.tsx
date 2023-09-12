@@ -12,6 +12,7 @@ type SortPropsType = {
 }
 
 const NotesSortItem: React.FC<SortPropsType> = ( { icon, text, onSelect, onAdd, controls, onRemove } ) => {
+    console.log(controls);
     return (
         <div className={styles.filterItem}>
             <button 

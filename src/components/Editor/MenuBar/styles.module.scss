@@ -13,9 +13,12 @@
     top: 0;
     left: 0;
     transform: translateX(0px);
+    &::-webkit-scrollbar {
+      display: none;
+    }
     &.fixed {
       position: fixed;
-      top: 57.9px;
+      top: 57px;
       left: 15px;
       transform: translateX(-15px);
       height: 30px;
@@ -27,7 +30,7 @@
   }
 
   ol {
-    padding: 0 1.4rem;
+    // padding: 0 1.4rem;
   }
   @media (min-width: 540px) {
     position: sticky;
