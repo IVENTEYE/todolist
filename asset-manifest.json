@@ -1,20 +1,23 @@
 {
   "files": {
-    "main.css": "/todolist/static/css/main.9bdb72bd.css",
-    "main.js": "/todolist/static/js/main.b050b93c.js",
+    "main.css": "/todolist/static/css/main.996bfb85.css",
+    "main.js": "/todolist/static/js/main.83339fe5.js",
     "static/media/donate__bg-dark.svg": "/todolist/static/media/donate__bg-dark.ba211ea7a761062df79b.svg",
     "static/media/donate__bg.svg": "/todolist/static/media/donate__bg.9b7fbb3a8c7d6184e26d.svg",
     "static/media/confetti.png": "/todolist/static/media/confetti.6c5caec8a881ee17e9f6.png",
     "service-worker.js": "/todolist/service-worker.js",
+    "static/media/eye-slash-regular.svg": "/todolist/static/media/eye-slash-regular.e8ca096deb0e3032cd1d38878e392aa7.svg",
     "index.html": "/todolist/index.html",
+    "static/media/eye-regular.svg": "/todolist/static/media/eye-regular.898a052b5bd5402e80bcc5bac0f7f58c.svg",
     "static/media/star_solid.svg": "/todolist/static/media/star_solid.e497d3d8e9c6746c37bc5bc8bd5694b1.svg",
     "static/media/notes.svg": "/todolist/static/media/notes.0e03acc9877e3f1afcb9bfec8ec03083.svg",
+    "static/media/login.svg": "/todolist/static/media/login.648aaf05a454af9d6cf116af16851d59.svg",
     "static/media/bookmark.svg": "/todolist/static/media/bookmark.7464ac4f4ade6d005542ee566b1c2771.svg",
-    "main.9bdb72bd.css.map": "/todolist/static/css/main.9bdb72bd.css.map",
-    "main.b050b93c.js.map": "/todolist/static/js/main.b050b93c.js.map"
+    "main.996bfb85.css.map": "/todolist/static/css/main.996bfb85.css.map",
+    "main.83339fe5.js.map": "/todolist/static/js/main.83339fe5.js.map"
   },
   "entrypoints": [
-    "static/css/main.9bdb72bd.css",
-    "static/js/main.b050b93c.js"
+    "static/css/main.996bfb85.css",
+    "static/js/main.83339fe5.js"
   ]
 }
