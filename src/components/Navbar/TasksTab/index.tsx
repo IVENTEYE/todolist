@@ -6,6 +6,8 @@ import Placeholder from '../../Placeholder/index.tsx';
 import { useSelector } from 'react-redux';
 import { setValue } from '../../../redux/slices/inputSlice.ts';
 import styles from './index.module.scss'
+import { RootState } from '../../../redux/store/index.js';
+import Loading from '../../Loading/index.tsx';
 
 type TasksTabProps = {
     fieldAction: () => void;
@@ -26,13 +28,14 @@ type TasksItemsType = {
 }
 
 const TasksTab: React.FC<TasksTabProps> = ({ fieldAction, taskRemove, taskUpdate }) => {
-  const tasks = useSelector((state: any) => state.tasks.items);
+  const tasks = useSelector((state: RootState) => state.tasks.items);
+  const tasksLoading = useSelector((state: RootState) => state.tasks.isLoading);
   return (
     <>
       <Field action={fieldAction} setButton placeholder="Введите текст задачи..."/>
       <div className={styles.tasksWrapper}>
         <AnimatePresence mode="popLayout">
-          {tasks.length > 0 ? (
+          {tasksLoading ? <Loading text='Загрузка задач...'/> : tasks.length > 0 ? (
             tasks.map((task: TasksItemsType) => {
               return (
                 <Task

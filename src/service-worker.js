@@ -18,11 +18,10 @@ const staticCacheName = 's-app-v1.3.0';
 const assetUrls = [
   './',
   './index.html',
-  './static/js/main.83339fe5.js',
-  './static/css/main.996bfb85.css',
+  './static/js/main.5fe3e9e8.js',
+  './static/css/main.948c4c04.css',
   './img/blank-paper.png',
   './img/noNotes.svg',
-  './img/logout.png'
 ];
 
 clientsClaim();

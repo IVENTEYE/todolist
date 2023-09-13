@@ -4,7 +4,7 @@ import styles from '../App.module.scss';
 import AppContext from '../context';
 import Header from '../components/Header/index.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadLocalStorage, onChangeStateItem } from '../redux/slices/tasksSlice.ts';
+import { loadLocalStorage, onChangeStateItem, setTasksLoading } from '../redux/slices/tasksSlice.ts';
 import { setTheme } from '../redux/slices/themeSlice.ts';
 import { setRedact } from '../redux/slices/noteRedactSlice.ts';
 import {
@@ -12,6 +12,7 @@ import {
   localStorageNotes,
   removeNote,
   selectNote,
+  setNotesLoading,
   updateNote,
 } from '../redux/slices/notesSlice.ts';
 import Body from '../components/Body/index.tsx';
@@ -72,7 +73,7 @@ function Home() {
   const [userLoginned, setUserLoginned] = useState(false);
   const [noteGetDate, setNoteGetDate] = useState('');
   const [noteGetMonth, setNoteGetMonts] = useState('');
-  const [currentNotes, setCurrentNotes] = useState(notes);
+  const [currentNotes, setCurrentNotes] = useState(notes ? notes : []);
 
   const [confirmModal, setConfirmModal] = useState(false);
   const [donatModal, setDonatModal] = useState(false);
@@ -153,6 +154,7 @@ function Home() {
     }
 
     const fetchNotes = async () => {
+      dispatch(setNotesLoading(true));
       try {
         await get(child(ref(db), `notes/${id}`)).then((snapshot) => {
           const mergeNotes: INote[] = [];
@@ -160,16 +162,17 @@ function Home() {
             const response: INote[] = Object.values(snapshot.val());
             response.forEach((res: INote) => mergeNotes.push(res));
             if (notes.length > 0) {
-              actionTooltip("Данные успешно перенесены", "/img/done.png");
+              actionTooltip("Данные успешно перенесены", "./img/done.png");
               notes.forEach((note: INote) => {
                 mergeNotes.push(note);
               });
             }
             dispatch(localStorageNotes(mergeNotes));
+            dispatch(setNotesLoading(false));
           } else {
             console.log('No data available');
             if (notes.length > 0) {
-              actionTooltip("Данные успешно перенесены", "/img/done.png");
+              actionTooltip("Данные успешно перенесены", "./img/done.png");
             }
           }
         });
@@ -236,6 +239,8 @@ function Home() {
     localStorage.setItem('userLoginned',  JSON.stringify(userLoginned));
 
     if (userLoginned && !isAuth) {
+      dispatch(setNotesLoading(true));
+      dispatch(setTasksLoading(true));
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           dispatch(setUser({email: user.email, token: user.accessToken, id: user.uid}));
@@ -244,21 +249,24 @@ function Home() {
             await get(child(ref(db), `notes/${id}`)).then((snapshot) => {
               if (snapshot.exists()) {
                 const response = snapshot.val();
-                dispatch(localStorageNotes(response[uid]));
+                
+                dispatch(localStorageNotes(response[uid] ? response[uid] : []));
+                dispatch(setNotesLoading(false));
               }
             });
 
             await get(child(ref(db), `tasks/${id}`)).then((snapshot) => {
               if (snapshot.exists()) {
                 const response = snapshot.val();
-                dispatch(loadLocalStorage(response[uid]));
+                dispatch(loadLocalStorage(response[uid] ? response[uid] : []));
+                dispatch(setTasksLoading(false));
               };
             });
 
             await get(child(ref(db), `categories/${id}`)).then((snapshot) => {
               if (snapshot.exists()) {
                 const response = snapshot.val();
-                setCategories(response[uid]);
+                setCategories(response[uid] ? response[uid] : categories);
               };
             });
           } catch (e) {

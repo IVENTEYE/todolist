@@ -67,7 +67,7 @@ const Header: React.FC<HeaderPropsType> = ({ theme, setDonatModal, setCategories
         }}
         style={{ marginTop: '2px' }}
         >
-          <img src="/img/logout.png" alt="Выход" width={20} height={20} />
+          <img src="./img/logout.png" alt="Выход" width={20} height={20} />
         </button>
       ) : (
         <Link to="/login">          

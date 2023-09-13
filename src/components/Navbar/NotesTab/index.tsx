@@ -17,7 +17,7 @@ type NotesTabProps = {
   categories: Object[];
   filterCategory: () => void;
   filteredNotes: {}[];
-  notesMapped: JSX.Element | JSX.Element[];
+  renderNotes: JSX.Element | JSX.Element[];
   currentNotes: Object[];
   elementsHidden: boolean;
 };
@@ -29,7 +29,7 @@ const NotesTab: React.FC<NotesTabProps> = ({
   categories,
   filterCategory,
   filteredNotes,
-  notesMapped,
+  renderNotes,
   currentNotes,
   elementsHidden,
 }) => {
@@ -57,13 +57,14 @@ const NotesTab: React.FC<NotesTabProps> = ({
           />
         ) : null}
       </div>
+      {}
       {!noteRedact ? (
         <Reorder.Group
           axys="y"
           style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto' }}
           values={filteredNotes}
           onReorder={reorderNote}>
-          {notesMapped}
+          {renderNotes}
         </Reorder.Group>
       ) : (
         <AnimatePresence>

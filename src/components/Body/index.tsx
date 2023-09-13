@@ -13,6 +13,7 @@ import {
   loadLocalStorage,
   onRemoveItem,
   onUpdateItem,
+  setTasksLoading,
 } from '../../redux/slices/tasksSlice.ts';
 import { setRedact } from '../../redux/slices/noteRedactSlice.ts';
 import Note, { NoteTypes } from '../Note/index.tsx';
@@ -28,6 +29,8 @@ import { db} from '../../firebase.ts';
 import { useAuth } from '../../redux/hooks/useAuth.ts';
 import { ITask } from '../../types';
 import { RootState } from '../../redux/store';
+import Loading from '../Loading/index.tsx';
+// import { ReactComponent as Logo } from "../../icons/done.png"
 
 type BodyTypeProps = {
   noteRedact: boolean;
@@ -72,12 +75,14 @@ const Body: React.FC<BodyTypeProps> = ({
   const tasks: ITask[] = useSelector((state: RootState) => state.tasks.items);
   const inputValue = useSelector((state: RootState) => state.input.value);
   const theme = useSelector((state: RootState) => state.theme.theme);
+  const notesLoading = useSelector((state: RootState) => state.notes.isLoading);
+  
 
   const [taskGetDate, setTaskGetDate] = useState('');
   const [taskGetMonth, setTaskGetMonts] = useState('');
 
-  const selectedNotes = currentNotes.filter((note: NoteTypes) => note.selected === true);
-  const defaultNotes = currentNotes.filter((note: NoteTypes) => note.selected === false);
+  const selectedNotes = currentNotes ? currentNotes.filter((note: NoteTypes) => note.selected === true) : [];
+  const defaultNotes = currentNotes ? currentNotes.filter((note: NoteTypes) => note.selected === false) : [];
   const filteredNotes = [...selectedNotes, ...defaultNotes].filter((note: NoteTypes) =>
     note.label.toLowerCase().includes(inputValue.toLowerCase()),
   );
@@ -165,6 +170,8 @@ const Body: React.FC<BodyTypeProps> = ({
       />
     );
 
+    const renderNotes = notesLoading ? <Loading text='Загрузка заметок...'/> : notesMapped;
+
   useEffect(() => {
     const tasks: ITask[] = JSON.parse(localStorage.getItem('tasks')!);
     if (!isAuth) {
@@ -174,6 +181,7 @@ const Body: React.FC<BodyTypeProps> = ({
     };
 
     const fetchTasks = async () => {
+      dispatch(setTasksLoading(true));
       try {
         await get(child(ref(db), `tasks/${id}`)).then((snapshot) => {
           const mergeTasks: ITask[] = [];
@@ -181,18 +189,19 @@ const Body: React.FC<BodyTypeProps> = ({
             const response: ITask[] = Object.values(snapshot.val());
             response.forEach((res: ITask) => mergeTasks.push(res));
             if (tasks.length > 0) {
-              actionTooltip("Данные успешно перенесены", "/img/done.png");
+              actionTooltip("Данные успешно перенесены", "./img/done.png");
               tasks.forEach((task: ITask) => {
                 mergeTasks.push(task);
               });
               setTaskId(tasks[0].id);
             }
           dispatch(loadLocalStorage(mergeTasks));
+          dispatch(setTasksLoading(false));
           } else {
             console.log('No data available');
             if (tasks.length > 0) {
               setTaskId(tasks[0].id);
-              actionTooltip("Данные успешно перенесены", "/img/done.png");
+              actionTooltip("Данные успешно перенесены", "./img/done.png");
             }
           }
         });
@@ -271,7 +280,7 @@ const Body: React.FC<BodyTypeProps> = ({
               categories={categories}
               filterCategory={filterCategory}
               filteredNotes={filteredNotes}
-              notesMapped={notesMapped}
+              renderNotes={renderNotes}
               currentNotes={currentNotes}
               elementsHidden={elementsHidden}
             />

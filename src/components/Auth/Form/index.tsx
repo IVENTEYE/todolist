@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../../redux/slices/userSlice.ts';
 import { ReactComponent as EyeOpen } from '../../../icons/eye-regular.svg';
 import { ReactComponent as EyeClose } from '../../../icons/eye-slash-regular.svg';
+import { ReactComponent as Logo } from '../../../icons/logo.svg';
 
 interface IForm {
   title: 'Войти' | 'Зарегистрироваться';
@@ -44,9 +45,9 @@ const Form: React.FC<IForm> = ({ title, formLabel, handleClick, errorText, setEr
   };
 
   return (
-    <form action="" className={styles.form}>
+    <div className={styles.form}>
       <div className={styles.formLogo}>
-        <img src="/img/logo.svg" alt="" width={50} height={50}/>
+        <Logo width={50} height={50} />
       </div>
       <div className={styles.formContainer}>
         <h1 className={styles.form__title}>{formLabel}</h1>
@@ -83,68 +84,72 @@ const Form: React.FC<IForm> = ({ title, formLabel, handleClick, errorText, setEr
           Войти с помощью Google
         </button>
         <hr className={styles.divider}></hr>
-        <div className={styles.form__fields}>
-          <div className={styles.form__field}>
-            <p className={styles.form__fieldLabel}>Адрес электронной почты</p>
-            <input
-              style={{ display: 'block' }}
-              className={errorText === "user-not-found" || errorText === "invalid-email" ? styles.form__fieldInput + ' ' + styles.wrong : styles.form__fieldInput}
-              type="email"
-              placeholder="Введите e-mail"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                if (errorText) {
-                  setErrorText('');
-                }
-              }}
-              required
-            />
-            {errorText === "user-not-found" ? <small className={styles.error}>Пользователь не найден</small> : null}
-            {errorText === "invalid-email" ? <small className={styles.error}>Введен неверный email</small> : null}
-          </div>
-          <div className={styles.form__field}>
-            <p className={styles.form__fieldLabel}>Пароль</p>
-            <input
-              style={{ display: 'block' }}
-              className={errorText === "wrong-password" || errorText === "weak-password" ? styles.form__fieldInput + ' ' + styles.wrong : styles.form__fieldInput}
-              type={passwordVidible}
-              placeholder="Введите пароль"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                if (errorText) {
-                  setErrorText('');
-                }
-              }}
-              required
-            />
-            {password && (
-              <button 
-                className={styles.passwordBtn}
-                onClick={() => {
-                  if (passwordVidible === 'password') {
-                    setPasswordVisible("text");
-                  } else if (passwordVidible === 'text') {
-                    setPasswordVisible("password");
+        <form action="">
+          <div className={styles.form__fields}>
+            <div className={styles.form__field}>
+              <p className={styles.form__fieldLabel}>Адрес электронной почты</p>
+              <input
+                style={{ display: 'block' }}
+                className={errorText === "user-not-found" || errorText === "invalid-email" ? styles.form__fieldInput + ' ' + styles.wrong : styles.form__fieldInput}
+                type="email"
+                placeholder="Введите e-mail"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (errorText) {
+                    setErrorText('');
                   }
                 }}
-              >
-                {passwordVidible === 'password' ? <EyeOpen width={20} fill="#999" /> : <EyeClose width={20} fill="#999" />} 
-              </button>
-            )}
+                required
+              />
+              {errorText === "user-not-found" ? <small className={styles.error}>Пользователь не найден</small> : null}
+              {errorText === "invalid-email" ? <small className={styles.error}>Введен неверный email</small> : null}
+            </div>
+            <div className={styles.form__field}>
+              <p className={styles.form__fieldLabel}>Пароль</p>
+              <input
+                style={{ display: 'block' }}
+                className={errorText === "wrong-password" || errorText === "weak-password" ? styles.form__fieldInput + ' ' + styles.wrong : styles.form__fieldInput}
+                type={passwordVidible}
+                placeholder="Введите пароль"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (errorText) {
+                    setErrorText('');
+                  }
+                }}
+                required
+              />
+              {password && (
+                <button 
+                  type='button'
+                  className={styles.passwordBtn}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (passwordVidible === 'password') {
+                      setPasswordVisible("text");
+                    } else if (passwordVidible === 'text') {
+                      setPasswordVisible("password");
+                    }
+                  }}
+                >
+                  {passwordVidible === 'password' ? <EyeOpen width={20} fill="#999" /> : <EyeClose width={20} fill="#999" />} 
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-        {errorText === "wrong-password" ? <small className={styles.error}>Неверный пароль</small> : null}
-        {errorText === "weak-password" ? <small className={styles.error}>Пароль должен содержать не менее 6 символов</small> : null}
-        <input
-          className={styles.form__btn}
-          type="submit"
-          value={title}
-          onClick={() => {
-            handleClick(email, password);
-          }}
-        />
+          {errorText === "wrong-password" ? <small className={styles.error}>Неверный пароль</small> : null}
+          {errorText === "weak-password" ? <small className={styles.error}>Пароль должен содержать не менее 6 символов</small> : null}
+          <input
+            className={styles.form__btn}
+            type="submit"
+            value={title}
+            onClick={() => {
+              handleClick(email, password);
+            }}
+          />
+        </form>
         <div className={styles.authLink}>
           <p>{title === 'Войти' ? 'Еще нет аккаунта?' : 'Уже есть аккаунт?'}</p>
           &nbsp;
@@ -155,7 +160,7 @@ const Form: React.FC<IForm> = ({ title, formLabel, handleClick, errorText, setEr
           )}
         </div>
       </div>
-    </form>
+    </div>
   );
 };
 

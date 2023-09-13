@@ -1,0 +1,82 @@
+.loading {
+    margin: auto;
+    text-align: center;
+}
+
+.logo {
+    position: relative;
+    &::after,
+    &::before {
+        content: '';
+        position: absolute;
+        top: 43%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #f84f4f;
+        border-radius: 50%;
+        opacity: .3;
+    }
+    &::after {
+        width: 100px;
+        height: 100px;
+        z-index: 1;
+        animation: circleAnim 2.4s infinite ease-in-out;
+    }
+    &::before {
+        width: 110px;
+        height: 110px;
+        animation: circleReverseAnim 1.8s infinite ease-in-out;
+    }
+}
+
+.logoIcon {
+    position: relative;
+    margin-bottom: 8px;
+    animation: logoAnim 2.4s infinite ease-in-out;
+    will-change: transform, scale;
+    z-index: 2;
+}
+
+.text {
+    font-weight: 600;
+    color: var(--second-color);
+    font-size: 17px;
+}
+
+@keyframes logoAnim {
+    0% {
+        transform: scale(.7);
+    }
+    50% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(.7);
+    }
+}
+
+@keyframes circleAnim {
+    0% {
+        transform: translate(-50%, -50%) scale(.8);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(.8);
+
+    }
+}
+
+@keyframes circleReverseAnim {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(.8);
+
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}

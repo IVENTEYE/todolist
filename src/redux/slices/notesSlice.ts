@@ -3,6 +3,7 @@ import { INote } from '../../types';
 
 const initialState = {
   items: [],
+  isLoading: false,
 };
 
 const notesSlice = createSlice({
@@ -60,8 +61,11 @@ const notesSlice = createSlice({
     reorderItem(state, action: PayloadAction<INote[]>) {
       state.items = action.payload;
     },
+    setNotesLoading(state, action: PayloadAction<boolean>) {
+      state.isLoading = action.payload;
+    }
   },
 });
 
-export const { addNote, removeNote, updateNote, selectNote, removeCategory, localStorageNotes, reorderItem } = notesSlice.actions;
+export const { addNote, removeNote, updateNote, selectNote, removeCategory, localStorageNotes, reorderItem, setNotesLoading } = notesSlice.actions;
 export default notesSlice.reducer;

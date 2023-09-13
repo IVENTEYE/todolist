@@ -4,6 +4,7 @@ import { ITask } from '../../types';
 
 const initialState = {
   items: [],
+  isLoading: false,
 };
 
 const taskSlice = createSlice({
@@ -61,8 +62,11 @@ const taskSlice = createSlice({
         return task;
       });
     },
+    setTasksLoading(state, action: PayloadAction<boolean>) {
+      state.isLoading = action.payload;
+    },
   },
 });
 
-export const { addItem, onRemoveItem, onChangeStateItem, onUpdateItem, loadLocalStorage } = taskSlice.actions;
+export const { addItem, onRemoveItem, onChangeStateItem, onUpdateItem, loadLocalStorage, setTasksLoading } = taskSlice.actions;
 export default taskSlice.reducer;
