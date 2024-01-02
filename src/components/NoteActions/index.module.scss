@@ -1,0 +1,28 @@
+.actions {
+    position: absolute;
+    list-style: none;
+    background-color: var(--notes-bg);
+    padding: 10px;
+    min-width: 150px;
+    top: 100%;
+    left: 0;
+    z-index: 5;
+    box-shadow: 1px 16px 22px -16px var(--box-shadow);
+    border-radius: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in;
+    li {
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+    }
+    &Button {
+        color: var(--second-color);
+    }
+    &.active {
+        opacity: 1;
+        visibility: visible;
+        top: 110%;
+    }
+}

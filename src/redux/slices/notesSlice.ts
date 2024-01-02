@@ -14,7 +14,8 @@ const notesSlice = createSlice({
       state.items.unshift(action.payload);
     },
     removeNote(state, action) {
-        state.items = state.items.filter(note => note.id !== action.payload.noteRedactId)
+        state.items = state.items.filter(note => note.id !== action.payload.noteRedactId);
+        console.log(action.payload);
     },
     updateNote(state, action) {
       state.items = state.items.map((note: INote) => {
@@ -23,7 +24,7 @@ const notesSlice = createSlice({
             ...note,
             day: action.payload.noteGetDate,
             month: action.payload.noteGetMonth,
-            label: action.payload.title || action.payload.description.toString().replace(/( |<([^>]+)>)/ig, ""),
+            label: action.payload.title || action.payload.description.toString().replace(/(\<(\/?[^>]+)>)/g, ""),
             description: action.payload.description,
             categoryIcon: action.payload.icon,
             category: action.payload.category,

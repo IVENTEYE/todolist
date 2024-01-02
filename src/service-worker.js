@@ -13,13 +13,13 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
-const staticCacheName = 's-app-v1.3.0';
+const staticCacheName = 's-app-v1.4.0';
 // Массив статичных файлов
 const assetUrls = [
   './',
   './index.html',
-  './static/js/main.5fe3e9e8.js',
-  './static/css/main.948c4c04.css',
+  './static/js/main.13c8076c.js',
+  './static/css/main.02dafca1.css',
   './img/blank-paper.png',
   './img/noNotes.svg',
 ];

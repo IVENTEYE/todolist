@@ -84,7 +84,7 @@ const Form: React.FC<IForm> = ({ title, formLabel, handleClick, errorText, setEr
           Войти с помощью Google
         </button>
         <hr className={styles.divider}></hr>
-        <form action="">
+        <form>
           <div className={styles.form__fields}>
             <div className={styles.form__field}>
               <p className={styles.form__fieldLabel}>Адрес электронной почты</p>
@@ -125,8 +125,7 @@ const Form: React.FC<IForm> = ({ title, formLabel, handleClick, errorText, setEr
                 <button 
                   type='button'
                   className={styles.passwordBtn}
-                  onClick={(e) => {
-                    e.preventDefault();
+                  onClick={() => {
                     if (passwordVidible === 'password') {
                       setPasswordVisible("text");
                     } else if (passwordVidible === 'text') {
@@ -145,7 +144,8 @@ const Form: React.FC<IForm> = ({ title, formLabel, handleClick, errorText, setEr
             className={styles.form__btn}
             type="submit"
             value={title}
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               handleClick(email, password);
             }}
           />

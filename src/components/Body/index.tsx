@@ -30,7 +30,6 @@ import { useAuth } from '../../redux/hooks/useAuth.ts';
 import { ITask } from '../../types';
 import { RootState } from '../../redux/store';
 import Loading from '../Loading/index.tsx';
-// import { ReactComponent as Logo } from "../../icons/done.png"
 
 type BodyTypeProps = {
   noteRedact: boolean;
@@ -170,7 +169,7 @@ const Body: React.FC<BodyTypeProps> = ({
       />
     );
 
-    const renderNotes = notesLoading ? <Loading text='Загрузка заметок...'/> : notesMapped;
+  const renderNotes = notesLoading ? <Loading text='Загрузка заметок...'/> : notesMapped;
 
   useEffect(() => {
     const tasks: ITask[] = JSON.parse(localStorage.getItem('tasks')!);
@@ -189,16 +188,17 @@ const Body: React.FC<BodyTypeProps> = ({
             const response: ITask[] = Object.values(snapshot.val());
             response.forEach((res: ITask) => mergeTasks.push(res));
             if (tasks.length > 0) {
-              actionTooltip("Данные успешно перенесены", "./img/done.png");
               tasks.forEach((task: ITask) => {
                 mergeTasks.push(task);
               });
               setTaskId(tasks[0].id);
+              actionTooltip("Данные успешно перенесены", "./img/done.png");
             }
           dispatch(loadLocalStorage(mergeTasks));
           dispatch(setTasksLoading(false));
           } else {
             console.log('No data available');
+            dispatch(setTasksLoading(false));
             if (tasks.length > 0) {
               setTaskId(tasks[0].id);
               actionTooltip("Данные успешно перенесены", "./img/done.png");

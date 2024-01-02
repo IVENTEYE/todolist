@@ -43,7 +43,7 @@ const NoteRedact: React.FC<NoteRedactPropsType> = ({ redactCategories }) => {
     setCategoryIcon(icon);
   };
 
-  const descriptionText: string = descriptionValue.toString().replace(/( |<([^>]+)>)/gi, '');
+  const descriptionText: string = descriptionValue.toString().replace(/(\<(\/?[^>]+)>)/g, '');
 
   const menuBarOffset = menuBarRef.current ? menuBarRef.current.offsetTop + 13 : 0;
 

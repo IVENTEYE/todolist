@@ -162,15 +162,16 @@ function Home() {
             const response: INote[] = Object.values(snapshot.val());
             response.forEach((res: INote) => mergeNotes.push(res));
             if (notes.length > 0) {
-              actionTooltip("Данные успешно перенесены", "./img/done.png");
               notes.forEach((note: INote) => {
                 mergeNotes.push(note);
               });
+              actionTooltip("Данные успешно перенесены", "./img/done.png");
             }
             dispatch(localStorageNotes(mergeNotes));
             dispatch(setNotesLoading(false));
           } else {
             console.log('No data available');
+            dispatch(setNotesLoading(false));
             if (notes.length > 0) {
               actionTooltip("Данные успешно перенесены", "./img/done.png");
             }
@@ -199,7 +200,7 @@ function Home() {
 
     if (isAuth) {
       fetchNotes();
-      if (storageCategories.length) {
+      if (storageCategories.length !== 4) {
         set(ref(db, `categories/${id}`), storageCategories);
       }
       fetchCategories();
@@ -317,9 +318,11 @@ function Home() {
             text: 'Без категории',
           },
         ]);
+      } 
+    } else {    
+      if (categories.length !== 4) {
+        set(ref(db, `categories/${id}`), categories);
       }
-    } else {
-      set(ref(db, `categories/${id}`), categories);
     }
   }, [categories]);
 
@@ -327,7 +330,7 @@ function Home() {
     if (description.length > 0 || title.length > 0) {
       const note = {
         id: Math.random().toString(16).slice(2),
-        label: title || description.toString().replace(/( |<([^>]+)>)/gi, ''),
+        label: title || description.toString().replace(/(\<(\/?[^>]+)>)/g, ''),
         description: description,
         day: noteGetDate,
         month: noteGetMonth,

@@ -77,6 +77,13 @@
             }
         }
     }
+    &.selected {
+        // z-index: 5;
+    }
+}
+
+.wrapper {
+    position: relative;
 }
 
 .note__draggableActive {

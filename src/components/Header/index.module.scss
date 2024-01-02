@@ -10,18 +10,54 @@
     padding: 15px 20px;
     border-radius: 4px 4px 0px 0px;
     will-change: padding;
+    &::before {
+        content: "";
+        position: absolute;
+        top: -15px;
+        left: 0;
+        width: 112%;
+        height: 15px;
+        background-image: url('../../icons/snow_cap.png');
+        background-position: -20px 0;
+        background-size: cover;
+        background-repeat: repeat;
+    }
+
     &Title {
         color: var(--main-color);
         font-size: 22px;
         font-weight: 600;
         will-change: font-size;
         flex: 1 1 auto;
+        position: relative;
+        &::before {
+            content: "";
+            position: absolute;
+            top: -9px;
+            left: -6px;
+            transform: rotate(3deg);
+            width: 20px;
+            height: 20px;
+            background-image: url('../../icons/hat.png');
+            background-position: 0 0;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
     }
     @media (min-width: 539.99px) {
         position: relative;
     }
     @media (max-width: 539.99px) {
         border-radius: 0;
+        overflow-x: hidden;
+        &::before {
+            top: -7px;
+            transform: rotate(180deg);
+            left: 0;
+            width: 134%;
+            height: 19px;
+            background-position: 95px 0;  
+        }
     }
     @media (max-width: 424.99px) {
         & {
